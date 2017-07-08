@@ -10,8 +10,7 @@ import time
 from pprint import pprint
 import smtplib
 from email.message import EmailMessage
-
-import pytz  # ???
+import pytz
 
 from apiclient import discovery
 from oauth2client import client
@@ -78,10 +77,8 @@ def mail(text):
 
 
 def main():
-    """Shows basic usage of the Google Calendar API.
-
-    Creates a Google Calendar API service object and outputs a list of the next
-    10 events on the user's calendar.
+    """
+    Main rutine with infinite loop checkin calendar
     """
     parser = argparse.ArgumentParser(parents=[tools.argparser])
     parser.add_argument('config', type=argparse.FileType('r'), help='YAML config file')

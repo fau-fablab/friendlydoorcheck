@@ -9,6 +9,7 @@ Requirements
 * google-api-python-client
 * requests
 * ruamel.yaml
+* pytz
 
 Installation and Configuration
 ==============================
