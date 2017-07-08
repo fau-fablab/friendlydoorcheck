@@ -16,7 +16,7 @@ yay text:
 smtp host: smtp.fau.de
 
 # Grace time before mail is send
-grace seconds: 120
+grace seconds: 65
 
 # Seconds between poll to ensure space stays open during open time
 poll seconds: 60
