@@ -122,14 +122,17 @@ def main():
         if not open_door_required:
             fail_state = False
             print('Don\'t care (not yet started)')
-            sleep = (events[0]['start']['dateTime'] + spaceapi_delay - now).seconds
+            delta = events[0]['start']['dateTime'] + spaceapi_delay - now
+            sleep = delta.days*3600*24 + delta.seconds
             print('Sleeping for {}s until {}'.format(
                 sleep, events[0]['start']['dateTime'] + spaceapi_delay))
-            time.sleep(sleep)
+            time.sleep(min(sleep, config['refresh seconds']))
             continue
         
         open_state = requests.get(config['spaceapi url']).json()['state']['open']
-        
+
+        delta = events[0]['end']['dateTime'] - now
+        sleep = min(config['poll seconds'], delta.days*3600*24 + delta.seconds)
         if not open_state:
             if not fail_state:
                 print('OH NOES... we suck... (ongoing open time, but door closed)')
@@ -137,7 +140,6 @@ def main():
                 mail('{}\n\n{}'.format(config['fail text'], event_to_string(events[0])))
             else:
                 print('still failing :(')
-            sleep = min(config['poll seconds'], (events[0]['end']['dateTime'] - now).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue
@@ -148,7 +150,6 @@ def main():
                 mail('{}\n\n{}'.format(config['yay text'], event_to_string(events[0])))
             else:
                 print('All good :) (ongoing open time and door open)')
-            sleep = min(config['poll seconds'], (events[0]['end']['dateTime'] - now).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue

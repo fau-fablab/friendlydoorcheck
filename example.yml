@@ -22,3 +22,6 @@ spaceapi delay seconds: 65
 
 # Seconds between poll to ensure space stays open during open time
 poll seconds: 60
+
+# Seconds between refresh of calendar
+refresh seconds: 3600
