@@ -1,6 +1,6 @@
 calendar id: "google@fablab.fau.de"
 event summary filter: ".*(Open|Self|Fahrrad)Lab.*"
-spaceapi url: "https://fablab.fau.de/spaceapi.php"
+spaceapi url: "https://fablab.fau.de/spaceapi/"
 mail to: kontakt@fablab.fau.de
 mail from: noreply@fablab.fau.de
 mail subject: Lab Termin, aber Tür geschlossen :(
@@ -16,7 +16,7 @@ yay text:
 smtp host: smtp.fau.de
 
 # Grace time before mail is send
-grace seconds: 60
+grace seconds: 65
 
 # Seconds between poll to ensure space stays open during open time
 poll seconds: 60
