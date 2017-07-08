@@ -2,7 +2,7 @@
 Friendly Door Check
 ===================
 
-This service checks an ical feed for events and matches it with the spaces API and sends out an alert mail in case of closed space during open events.
+This service checks a google calendar for events that require the door to be open and matches it with the spaces API. It sends out an alert mail in case the space is closed during open events. It also sends a recovery notice once the problem has resolved.
 
 Requirements
 ============
@@ -10,8 +10,17 @@ Requirements
 * requests
 * ruamel.yaml
 
+Installation and Configuration
+==============================
+1. Create a project and an API key in the `Google API Console<https://console.developers.google.com>`_
+2. Place client_id.json (obtained from API Console) file in this project directory
+3. Run ``./fdc.py --noauth_local_webserver`` and follow instructions to authenticate access to google account's calendars
+4. Have a look at ``example.yml`` and configure appropriately
+
 Usage
 =====
-    ./fdc.py config
+Execute:
+::
+    ./fdc.py config.yml
 
-If started on a remote machine using ssh, use `--noauth_local_webserver` flag on first start.
+Continues to run until no more suitable events (matching regex, end in future and not full-day events) can be retrieved from google.
