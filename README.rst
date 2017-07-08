@@ -13,7 +13,7 @@ Requirements
 
 Installation and Configuration
 ==============================
-1. Create a project and an API key in the `Google API Console<https://console.developers.google.com>`_
+1. Create a project and an API key in the `Google API Console <https://console.developers.google.com>`_
 2. Place client_id.json (obtained from API Console) file in this project directory
 3. Run ``./fdc.py --noauth_local_webserver example.yml`` and follow instructions to authenticate access to google account's calendars
 4. Have a look at ``example.yml`` and configure appropriately
