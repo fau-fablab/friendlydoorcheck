@@ -21,8 +21,7 @@ import requests
 
 
 SCOPES = 'https://www.googleapis.com/auth/calendar.readonly'
-CLIENT_SECRET_FILE = 'client_id.json'
-APPLICATION_NAME = 'Google Calendar API Python Quickstart'
+APPLICATION_NAME = 'FAU FabLab friendly door check'
 
 
 def get_credentials():
@@ -44,7 +43,7 @@ def get_credentials():
     store = Storage(credential_path)
     credentials = store.get()
     if not credentials or credentials.invalid:
-        flow = client.flow_from_clientsecrets(CLIENT_SECRET_FILE, SCOPES)
+        flow = client.flow_from_clientsecrets(config['client secret file'], SCOPES)
         flow.user_agent = APPLICATION_NAME
         if args:
             credentials = tools.run_flow(flow, store, args)
@@ -137,7 +136,7 @@ def main():
                 mail('{}\n\n{}'.format(config['fail text'], event_to_string(events[0])))
             else:
                 print('still failing :(')
-            sleep = config['poll seconds']
+            sleep = min(config['poll seconds'], (events[0]['end']['dateTime']-now - grace).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue
@@ -148,7 +147,7 @@ def main():
                 mail('{}\n\n{}'.format(config['yay text'], event_to_string(events[0])))
             else:
                 print('All good :) (ongoing open time and door open)')
-            sleep = config['poll seconds']
+            sleep = min(config['poll seconds'], (events[0]['end']['dateTime']-now - grace).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue

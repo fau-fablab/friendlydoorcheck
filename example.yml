@@ -1,3 +1,5 @@
+client secret file: client_id.json
+
 calendar id: "google@fablab.fau.de"
 event summary filter: ".*(Open|Self|Fahrrad)Lab.*"
 spaceapi url: "https://fablab.fau.de/spaceapi/"
