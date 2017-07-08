@@ -17,8 +17,8 @@ yay text:
     Yay! Jetzt ist doch jemand da :)
 smtp host: smtp.fau.de
 
-# Grace time before mail is send
-grace seconds: 65
+# Max. Delay of the spaceapi between door open and the state change in api
+spaceapi delay seconds: 65
 
 # Seconds between poll to ensure space stays open during open time
 poll seconds: 60

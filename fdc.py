@@ -89,7 +89,7 @@ def main():
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
 
-    grace = datetime.timedelta(seconds=config['grace seconds'])
+    spaceapi_delay = datetime.timedelta(seconds=config['spaceapi delay seconds'])
     fail_state = False
     
     while True:
@@ -117,13 +117,14 @@ def main():
             print(event_to_string(events[0]))
 
         now = datetime.datetime.now(pytz.utc)
-        open_door_required = (events[0]['start']['dateTime'] + grace < now)
+        open_door_required = (events[0]['start']['dateTime'] + spaceapi_delay < now)
         
         if not open_door_required:
             fail_state = False
             print('Don\'t care (not yet started)')
-            sleep = (events[0]['start']['dateTime'] + grace - now).seconds
-            print('Sleeping for {}s until {}'.format(sleep, events[0]['start']['dateTime'] + grace))
+            sleep = (events[0]['start']['dateTime'] + spaceapi_delay - now).seconds
+            print('Sleeping for {}s until {}'.format(
+                sleep, events[0]['start']['dateTime'] + spaceapi_delay))
             time.sleep(sleep)
             continue
         
@@ -136,7 +137,7 @@ def main():
                 mail('{}\n\n{}'.format(config['fail text'], event_to_string(events[0])))
             else:
                 print('still failing :(')
-            sleep = min(config['poll seconds'], (events[0]['end']['dateTime']-now - grace).seconds)
+            sleep = min(config['poll seconds'], (events[0]['end']['dateTime'] - now).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue
@@ -147,7 +148,7 @@ def main():
                 mail('{}\n\n{}'.format(config['yay text'], event_to_string(events[0])))
             else:
                 print('All good :) (ongoing open time and door open)')
-            sleep = min(config['poll seconds'], (events[0]['end']['dateTime']-now - grace).seconds)
+            sleep = min(config['poll seconds'], (events[0]['end']['dateTime'] - now).seconds)
             print('Sleeping for {}s'.format(sleep))
             time.sleep(sleep)
             continue
