@@ -6,10 +6,12 @@ This service checks an ical feed for events and matches it with the spaces API a
 
 Requirements
 ============
-* icalendar
+* google-api-python-client
 * requests
 * ruamel.yaml
 
 Usage
 =====
-    ./fdc.py ical_url spaceapi_url seconds_allowed_diff poll_during_open_time title_regex
+    ./fdc.py config
+
+If started on a remote machine using ssh, use `--noauth_local_webserver` flag on first start.
