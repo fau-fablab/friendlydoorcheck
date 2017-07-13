@@ -123,16 +123,16 @@ def main():
             fail_state = False
             print('Don\'t care (not yet started)')
             delta = events[0]['start']['dateTime'] + spaceapi_delay - now
-            sleep = delta.days*3600*24 + delta.seconds
+            sleep = min(config['refresh seconds'], max(0, delta.days*3600*24 + delta.seconds))
             print('Sleeping for {}s until {}'.format(
                 sleep, events[0]['start']['dateTime'] + spaceapi_delay))
-            time.sleep(min(sleep, config['refresh seconds']))
+            time.sleep(sleep)
             continue
         
         open_state = requests.get(config['spaceapi url']).json()['state']['open']
 
         delta = events[0]['end']['dateTime'] - now
-        sleep = min(config['poll seconds'], delta.days*3600*24 + delta.seconds)
+        sleep = min(config['poll seconds'], max(0, delta.days*3600*24 + delta.seconds))
         if not open_state:
             if not fail_state:
                 print('OH NOES... we suck... (ongoing open time, but door closed)')
