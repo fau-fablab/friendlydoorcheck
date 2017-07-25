@@ -13,12 +13,14 @@ fail text:
     der Fall ist.
     
     :(
+    
+    p.s. Es gibt eine Mail wenn das Problem behoben wurde, nicht jedoch wenn es weiter besteht.
 yay text:
     Yay! Jetzt ist doch jemand da :)
 smtp host: smtp.fau.de
 
 # Max. Delay of the spaceapi between door open and the state change in api
-spaceapi delay seconds: 65
+spaceapi delay seconds: 300
 
 # Seconds between poll to ensure space stays open during open time
 poll seconds: 60
